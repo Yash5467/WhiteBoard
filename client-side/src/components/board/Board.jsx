@@ -13,7 +13,7 @@ import {
   faSquare,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
-import { Warning, ImageInput } from "../index";
+import { Warning, ImageInput, CollabrateWindow } from "../index";
 
 function Board() {
   const canvasRef = useRef();
@@ -25,6 +25,11 @@ function Board() {
     sheetColor,
     resetWarning,
     imageSelector,
+    connectionWindow,
+    setConnectionWindow,
+    broadcasting,
+    isReciver,
+    reciverId
   } = useContext(colorContext);
   const [isDrawing, setIsDrawing] = useState(false);
   const socketRef = useRef(null);
@@ -44,31 +49,33 @@ function Board() {
     socketRef.current = socket;
 
     socketRef.current.on("update", (data) => {
-      socketDraw(data);
+      if(isReciver && data.reciverId==reciverId )
+      socketDraw(data);  
     });
 
-
-    socketRef.current.on("mouseDown",(data)=>{
+    socketRef.current.on("mouseDown", (data) => {
+      if(isReciver && data.reciverId==reciverId)
       socketDown(data);
-    })
-  }, [sheetColor]);
+    });
+  }, [sheetColor,isReciver,reciverId]);
 
   const onMouseDown = ({ nativeEvent }) => {
     contextRef.current.lineWidth = stroke;
     contextRef.current.strokeStyle = color;
     const { offsetX, offsetY } = nativeEvent;
-     socketRef.current.emit("mouseDown",{stroke,color,offsetX,offsetY})
+    if(broadcasting)
+    socketRef.current.emit("mouseDown", { stroke, color, offsetX, offsetY,reciverId });
     contextRef.current.beginPath();
     contextRef.current.moveTo(offsetX, offsetY);
     setIsDrawing(true);
   };
 
-  const socketDown=({offsetX,offsetY,color,stroke})=>{
-  contextRef.current.lineWidth=stroke;
-  contextRef.current.strokeStyle=color;
-  contextRef.current.beginPath(offsetX,offsetY);
-  contextRef.current.moveTo(offsetX,offsetY);
-  }
+  const socketDown = ({ offsetX, offsetY, color, stroke }) => {
+    contextRef.current.lineWidth = stroke;
+    contextRef.current.strokeStyle = color;
+    contextRef.current.beginPath(offsetX, offsetY);
+    contextRef.current.moveTo(offsetX, offsetY);
+  };
   const onMouseUp = () => {
     contextRef.current.closePath();
     setIsDrawing(false);
@@ -79,13 +86,14 @@ function Board() {
     }
 
     const { offsetX, offsetY } = nativeEvent;
-    socketRef.current.emit("update", { offsetX,  offsetY});
+    if(broadcasting)
+    socketRef.current.emit("update", { offsetX, offsetY , reciverId });
 
     contextRef.current.lineTo(offsetX, offsetY);
     contextRef.current.stroke();
   };
 
-  const socketDraw = ({ offsetX, offsetY}) => {
+  const socketDraw = ({ offsetX, offsetY }) => {
     contextRef.current.lineTo(offsetX, offsetY);
     contextRef.current.stroke();
   };
@@ -97,7 +105,17 @@ function Board() {
       <div className={`${imageSelector ? "" : "hidden"}`}>
         <ImageInput key={imageSelector} z={`${imageSelector ? "2" : "-2"}`} />
       </div>
-      <div className="absolute z-10 right-10 top-10 bg-[#6965DB] p-2 cursor-pointer rounded-lg ">
+      <div
+        className={` ${
+          connectionWindow ? "" : "hidden"
+        } h-full  absolute w-full flex justify-center items-center backdrop-blur-md "`}
+      >
+        <CollabrateWindow />
+      </div>
+      <div
+        onClick={() => setConnectionWindow((prev) => !prev)}
+        className="absolute z-10 right-10 top-10 bg-[#6965DB] p-2 cursor-pointer rounded-lg "
+      >
         <span className="invert">
           <FontAwesomeIcon size="lg" icon={faUsers} />
         </span>

@@ -4,6 +4,8 @@ import ColorSelector from "./colorSelector/ColorSelector";
 import Button from "./button/Button";
 import Warning from "./warning/Warning";
 import ImageInput from "./imageInput/ImageInput";
+import ConnectWindow from "./connectWindow/ConnectWindow";
+import CollabrateWindow from "./collabrateWindow/collabrateWindow";
 
 export {
     Board,
@@ -11,5 +13,7 @@ export {
     ColorSelector,
     Button,
     Warning,
-    ImageInput
+    ImageInput,
+    ConnectWindow,
+   CollabrateWindow
 }

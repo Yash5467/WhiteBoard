@@ -7,8 +7,12 @@ const ColorContextProvider=({children})=>{
     const [sheetColor,setSheetColor]=useState("#FFFFFF");
     const [resetWarning,setResetWarning]=useState(false);
     const [imageSelector,setImageSelector]=useState(false);
+    const [broadcasting,setBroadcasting]=useState(false);
+    const [reciverId,setReciverId]=useState("");
+    const [connectionWindow,setConnectionWindow]=useState(false);
+       const [isReciver,setIsReciver]=useState(false);
     return (
-       <colorContext.Provider value={{color,setColor,stroke,setStroke,sheetColor,setSheetColor,resetWarning,setResetWarning,imageSelector,setImageSelector}} >
+       <colorContext.Provider value={{color,setColor,stroke,setStroke,sheetColor,setSheetColor,resetWarning,setResetWarning,imageSelector,setImageSelector,connectionWindow,setConnectionWindow,isReciver,setBroadcasting,broadcasting,setReciverId,reciverId,setIsReciver}} >
        {children}
        </colorContext.Provider>
     )
