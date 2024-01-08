@@ -45,7 +45,7 @@ function Board() {
     context.scale(2, 2);
     contextRef.current = context;
 
-    const socket = socketIO.connect(`http://localhost:8080`);
+    const socket = socketIO.connect(import.meta.env.SERVER_URL);
     socketRef.current = socket;
 
     socketRef.current.on("update", (data) => {
