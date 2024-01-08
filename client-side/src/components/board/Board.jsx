@@ -63,6 +63,7 @@ function Board() {
     contextRef.current.lineWidth = stroke;
     contextRef.current.strokeStyle = color;
     const { offsetX, offsetY } = nativeEvent;
+    console.log(offsetX,offsetY);
     if(broadcasting)
     socketRef.current.emit("mouseDown", { stroke, color, offsetX, offsetY,reciverId });
     contextRef.current.beginPath();
@@ -88,7 +89,7 @@ function Board() {
     const { offsetX, offsetY } = nativeEvent;
     if(broadcasting)
     socketRef.current.emit("update", { offsetX, offsetY , reciverId });
-
+      
     contextRef.current.lineTo(offsetX, offsetY);
     contextRef.current.stroke();
   };
