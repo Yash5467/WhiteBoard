@@ -5,7 +5,7 @@ import Button from "./button/Button";
 import Warning from "./warning/Warning";
 import ImageInput from "./imageInput/ImageInput";
 import ConnectWindow from "./connectWindow/ConnectWindow";
-import CollabrateWindow from "./collabrateWindow/collabrateWindow";
+import CollabrateWindow from './collabrateWindow/CollabrateWindow'
 
 export {
     Board,
