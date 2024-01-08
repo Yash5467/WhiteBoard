@@ -15,5 +15,5 @@ export {
     Warning,
     ImageInput,
     ConnectWindow,
-   CollabrateWindow
+    CollabrateWindow
 }
