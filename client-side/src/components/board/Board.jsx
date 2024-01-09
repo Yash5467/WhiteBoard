@@ -44,7 +44,7 @@ function Board() {
     const context = canvas.getContext("2d");
     context.scale(2, 2);
     contextRef.current = context;
-    const socket = socketIO.connect(`${import.meta.env.VITE_SERVER_URL}`);
+    const socket = socketIO.connect("/");
     socketRef.current = socket;
 
     socketRef.current.on("update", (data) => {
