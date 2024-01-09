@@ -44,7 +44,7 @@ function Board() {
     const context = canvas.getContext("2d");
     context.scale(2, 2);
     contextRef.current = context;
-    const socket = socketIO.connect("/");
+    const socket = socketIO.connect("/api");
     socketRef.current = socket;
 
     socketRef.current.on("update", (data) => {

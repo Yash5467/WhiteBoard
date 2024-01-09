@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server:{
     proxy:{
-      '/':"https://white-board-afnh.onrender.com"
+      '/api':"https://white-board-afnh.onrender.com"
     }
   },
   plugins: [react()],
