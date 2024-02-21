@@ -7,7 +7,11 @@ const server = app.listen(process.env.PORT, () => {
   console.log(`app is listing at port ${process.env.PORT}`);
 });
 
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
 io.on("connection", (socket) => {
   socket.on("update", (data) => {
