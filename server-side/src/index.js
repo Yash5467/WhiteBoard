@@ -1,8 +1,7 @@
 import { Server } from "socket.io";
 import { app } from "./app.js";
-import dotenv from "dotenv";
 
-dotenv.config();
+
 
 const server = app.listen(process.env.PORT, () => {
   console.log(`app is listing at port ${process.env.PORT}`);
